@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dancing_script"
+        android:gravity="center_horizontal"
+        android:paddingBottom="@dimen/eight_dp"
+        android:paddingTop="@dimen/eight_dp"
+        android:text="@string/app_name"
+        android:textSize="25sp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/app_header"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/four_dp"
+        android:layout_marginRight="@dimen/four_dp"
+        android:background="@color/light_gray"
+        app:layout_constraintTop_toBottomOf="@id/app_header"
+        android:id="@+id/delimiter"/>
+
+    <com.zhaolin_zhang.tinnews.common.TinNoSwipeViewPager
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintTop_toBottomOf="@id/delimiter"
+        android:id="@+id/viewpager" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_navigation_height"
+        android:background="@color/white"
+        app:itemIconTint="@color/bottom_bar_color"
+        app:itemTextColor="@color/bottom_bar_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/navigation_items"
+        android:id="@+id/bottom_navigation" />
+
+</android.support.constraint.ConstraintLayout>
