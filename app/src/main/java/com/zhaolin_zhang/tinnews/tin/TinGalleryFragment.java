@@ -4,19 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.zhaolin_zhang.tinnews.R;
 import com.zhaolin_zhang.tinnews.mvp.MvpFragment;
-import com.zhaolin_zhang.tinnews.retrofit.NewsRequestApi;
-import com.zhaolin_zhang.tinnews.retrofit.RetrofitClient;
 import com.zhaolin_zhang.tinnews.retrofit.response.News;
 
 import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class TinGalleryFragment extends MvpFragment<TinContract.Presenter>
         implements TinNewsCard.OnSwipeListener, TinContract.View {
@@ -66,7 +62,7 @@ public class TinGalleryFragment extends MvpFragment<TinContract.Presenter>
 
     @Override
     public void onLike(News news) {
-
+        presenter.saveFavoriteNews(news);
     }
 
     @Override
@@ -75,6 +71,11 @@ public class TinGalleryFragment extends MvpFragment<TinContract.Presenter>
             TinNewsCard tinNewsCard = new TinNewsCard(news, mSwipeView, this);
             mSwipeView.addView(tinNewsCard);
         }
+    }
+
+    @Override
+    public void onError() {
+        Toast.makeText(getContext(), "News has been inserted before", Toast.LENGTH_SHORT).show();
     }
 
     @Override

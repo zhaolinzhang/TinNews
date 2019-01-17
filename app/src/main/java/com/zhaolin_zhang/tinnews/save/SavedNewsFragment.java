@@ -9,9 +9,17 @@ import android.widget.TextView;
 
 import com.zhaolin_zhang.tinnews.R;
 import com.zhaolin_zhang.tinnews.common.TinBasicFragment;
+import com.zhaolin_zhang.tinnews.mvp.MvpFragment;
+import com.zhaolin_zhang.tinnews.retrofit.response.News;
 import com.zhaolin_zhang.tinnews.save.detail.SavedNewsDetailedFragment;
 
-public class SavedNewsFragment extends TinBasicFragment {
+import java.util.List;
+
+public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter>
+        implements SavedNewsContract.View {
+
+    private TextView author;
+    private TextView description;
 
 
     public static SavedNewsFragment newInstance() {
@@ -34,4 +42,17 @@ public class SavedNewsFragment extends TinBasicFragment {
         return view;
     }
 
+    @Override
+    public SavedNewsContract.Presenter getPresenter() {
+        return new SavedNewsPresenter();
+    }
+
+    @Override
+    public void loadSavedNews(List<News> newsList) {
+        if (newsList.size() > 0) {
+            News news = newsList.get(newsList.size() - 1);
+            author.setText(news.getAuthor());
+            description.setText(news.getDescription());
+        }
+    }
 }

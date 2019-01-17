@@ -42,4 +42,14 @@ public class TinPresenter implements TinContract.Presenter {
             view.showNewsCard(newsList);
         }
     }
+
+    @Override
+    public void saveFavoriteNews(News news) {
+        model.saveFavoriteNews(news);
+    }
+
+    @Override
+    public void onError() {
+
+    }
 }

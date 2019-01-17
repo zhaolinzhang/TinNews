@@ -27,6 +27,7 @@ ext {
     googleVersion = '28.0.0'
     retrofitVersion = '2.2.0'
     rxjavaVersion = '2.0.1'
+    roomVersion = '1.1.1'
 }
 
 dependencies {
@@ -49,6 +50,11 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
+
+    implementation "android.arch.persistence.room:runtime:$roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
+    implementation "android.arch.persistence.room:rxjava2:$roomVersion"
+    implementation "android.arch.persistence.room:guava:$roomVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
