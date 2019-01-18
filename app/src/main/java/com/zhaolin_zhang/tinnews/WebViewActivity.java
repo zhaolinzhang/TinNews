@@ -31,13 +31,9 @@ public class WebViewActivity extends TinBasicActivity implements PopupMenu.OnMen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web_view);
 
-        findViewById(R.id.back).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
+        findViewById(R.id.back).setOnClickListener(v -> {
+            onBackPressed();
         });
 
         progressBar = findViewById(R.id.progress_bar);
@@ -57,24 +53,17 @@ public class WebViewActivity extends TinBasicActivity implements PopupMenu.OnMen
             }
         });
 
-//        Bundle bundle = getIntent().getExtras();
-//        if (bundle != null) {
-//            Bundle innnerBundle = bundle.getBundle(BUNDLE);
-//            if (innnerBundle != null) {
-//                url = innnerBundle.getString(URL);
-//                webView.loadUrl(url);
-//            }
-//        }
-
-        url = "https://www.google.com";
-        webView.loadUrl(url);
-        findViewById(R.id.more).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                showMenu(v);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            Bundle innnerBundle = bundle.getBundle(BUNDLE);
+            if (innnerBundle != null) {
+                url = innnerBundle.getString(URL);
+                webView.loadUrl(url);
             }
+        }
 
-
+        findViewById(R.id.more).setOnClickListener(v -> {
+            showMenu(v);
         });
     }
 
