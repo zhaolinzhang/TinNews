@@ -1,7 +1,11 @@
 package com.zhaolin_zhang.tinnews.profile;
 
+import android.annotation.SuppressLint;
+
 import com.zhaolin_zhang.tinnews.TinApplication;
 import com.zhaolin_zhang.tinnews.database.AppDatabase;
+
+import org.greenrobot.eventbus.EventBus;
 
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -12,21 +16,21 @@ public class ProfileModel implements ProfileContract.Model {
     private ProfileContract.Presenter presenter;
     private AppDatabase db = TinApplication.getDatabase();
 
+    @SuppressLint("CheckResult")
     @Override
     public void deleteAllNewsCache() {
         Completable.fromAction(() -> db.newsDao().deleteAllNews())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {
-                    presenter.onCacheCleared();
-                }, error -> {
+                .subscribe(() -> presenter.onCacheCleared(), error -> {
 
                 });
     }
 
     @Override
     public void setDefaultCountry(String country) {
-
+        EventBus.getDefault().post(new CountryEvent(country));
+        presenter.onCountryChanged(country);
     }
 
     @Override

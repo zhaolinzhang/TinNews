@@ -43,19 +43,9 @@ public class TinGalleryFragment extends MvpFragment<TinContract.Presenter>
                 .setSwipeInMsgLayoutId(R.layout.tin_news_swipe_in_msg_view)
                 .setSwipeOutMsgLayoutId(R.layout.tin_news_swipe_out_msg_view));
 
-        view.findViewById(R.id.rejectBtn).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                mSwipeView.doSwipe(false);
-            }
-        });
+        view.findViewById(R.id.rejectBtn).setOnClickListener(v -> mSwipeView.doSwipe(false));
 
-        view.findViewById(R.id.acceptBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSwipeView.doSwipe(true);
-            }
-        });
+        view.findViewById(R.id.acceptBtn).setOnClickListener(v -> mSwipeView.doSwipe(true));
 
         return view;
     }
@@ -67,6 +57,7 @@ public class TinGalleryFragment extends MvpFragment<TinContract.Presenter>
 
     @Override
     public void showNewsCard(List<News> newsList) {
+        mSwipeView.removeAllViews();
         for (News news: newsList) {
             TinNewsCard tinNewsCard = new TinNewsCard(news, mSwipeView, this);
             mSwipeView.addView(tinNewsCard);

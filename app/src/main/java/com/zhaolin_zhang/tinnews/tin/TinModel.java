@@ -17,7 +17,7 @@ public class TinModel implements TinContract.Model {
     private final NewsRequestApi newsRequestApi;
     private final AppDatabase db;
 
-    public TinModel() {
+    TinModel() {
         newsRequestApi = RetrofitClient.getInstance().create(NewsRequestApi.class);
         db = TinApplication.getDatabase();
     }
@@ -29,15 +29,14 @@ public class TinModel implements TinContract.Model {
         this.presenter = presenter;
     }
 
+    @SuppressLint("CheckResult")
     @Override
-    public void fetchData() {
-        newsRequestApi.getNewsByCountry("us")
+    public void fetchData(String country) {
+        newsRequestApi.getNewsByCountry(country)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(baseResponse -> baseResponse != null && baseResponse.articles != null)
-                .subscribe(baseResponse -> {
-                    presenter.showNewsCard(baseResponse.articles);
-                });
+                .subscribe(baseResponse -> presenter.showNewsCard(baseResponse.articles));
     }
 
     @SuppressLint("CheckResult")
@@ -46,8 +45,6 @@ public class TinModel implements TinContract.Model {
         Completable.fromAction(() -> db.newsDao().insertNews(news))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {}, error -> {
-                    presenter.onError();
-                });
+                .subscribe(() -> {}, error -> presenter.onError());
     }
 }
